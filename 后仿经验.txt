@@ -1,0 +1,9 @@
+在文件cfg中写入：
+instance {tb_top.U_TOP.U_CORE.U_Async} {noTiming}
+
+vcs命令：
+vcs +optconfigfile+cfg_filename
+
+coding style要求：
+写两级寄存器级联同步，不要使用{}，单独写两个寄存器，这样做的好处是，PR后网表好查。
+一个模块只能有一个时钟。
