@@ -8,4 +8,96 @@ vim保存了查找的历史记录，你可以在输入”/“或”?“后，用上、下光标键(或CTRL-P/CTR
 另外你还可以使用”q/“和”q?“命令，在vim窗口最下面打开一个新的窗口，这个窗口会列出你的查找历史记录，你可以使用任何vim编辑命令对此窗口的内容进行编辑，然后再按回车，就会对光标所在的行的内容进行查找。
 
 
+[ 翻页 ]
+
+在vim中翻页，同样可以使用PageUp和PageDown，不过，像使用上下左右光标一样，你的手指会移出主键盘区。
+因此，我们通常使用CTRL-B和CTRL-F来进行翻页，它们的功能等同于PageUp和PageDown。
+CTRL-B和CTRL-F前也可以加上数字，来表示向上或向下翻多少页。
+
+
+[ 行首/行尾 ]
+
+在vim中，移动到行首的命令非常简单，就是”0“，这个是数字0，而不是大写字母O。移动到行尾的命令是”$“。
+
+另外还有一个命令”^“，用它可以移动到行首的第一个非空白字符。
+
+在正则表达式中我们会看到，”^“字符代表行首，而”$“字符代表行尾。可见，vi/vim的按键的安排，的确是别具匠心的。
+
+
+[ 按单词移动 ]
+vim中，移动光标到下一个单词的词首，使用命令”w“，移动光标到上一个单词的词首，使用命令”b“；移动光标到下一个单词的结尾，用命令”e“，移动光标到上一个单词的结尾，使用命令”ge“
+
+
+
+
+
+
+vi/vim使用进阶: 使用标签(tag)文件
+
+Tag文件(标签文件)无疑是开发人员的利器之一，有了tag文件的协助，你可以在vim查看函数调用关系，类、结构、宏等的定义，可以在任意标签中跳转、返回……相信使用过Source Insight的人对这些功能并不陌生，而在vim中，此功能的实现依赖于tag文件。
+
+对于程序来说，Tag文件中保存了诸如函数、类、结构、宏等的名字，它们所处的文件，以及如何通过Ex命令跳转到这些标签。它是一个纯文本文件，因此你可以手工的编辑它，也可以使用脚本对其进行操作。
+
+虽然ctags有为数众多的选项，但通常我们所使用的非常简单。还是以vim 7.0的代码为例，我们执行：
+
+cd ~/src/vim70
+ctags –R src 
+上面这条命令会在~/src/vim70/目录下生成一个名为tags的文件，这个文件中包含~/src/vim70/src/目录下所有.c、.h文件中的标签。它一个文本文件，你可以用vim打开它看一下。此文件缺省按区分字母大小写排序，所以直接可以被vim使用。
+
+现在我们进入vim，执行下面的命令：
+
+:cd ~/src/vim70	"切换当前目录为~/src/vim70
+:set tags=tags	"设置tags选项为当前目录下的tags文件
+
+
+
+"开关tag窗口
+nnoremap <silent> <F8> :TlistToggle<CR>
+
+"使用右侧tag窗口
+"let Tlist_Use_Right_Window=1
+
+"一般设置.
+"set nocompatible "VIM而不是VI
+set history=50 "历史记录50条
+set fenc=utf-8 "设置默认语言为8位unicode
+"man Q gq "屏蔽Q, 以免进入Ex模式
+filetype on "打开文件类型检测
+
+"
+""颜色设置.
+colorscheme delek "主题
+"colorscheme evening "主题
+syntax on "语法高亮
+"set hls " 查找文本高亮
+
+"界面设置.
+set ruler "显示当前位置
+set number "显示行号
+""set nonumber "不显示行号
+
+"格式设置.
+set autoindent "自动缩进
+set smartindent "智能缩进
+set cindent "C缩进
+set tabstop=4 "硬TAB
+set softtabstop=4 "软TAB
+set shiftwidth=4 "缩进空格数
+set expandtab "空格替换TAB
+"set smarttab "智能TAB
+"
+set showmatch "显示匹配
+"set matchtime=5 "1/10秒延迟
+"set hlsearch "高亮搜索
+"set incsearch "搜索中匹配
+set tags=tags; "ctags
+set autochdir "ctags
+
+
+
+
+
+
+
+
 
