@@ -1,0 +1,121 @@
+用惯了DOS的伙计刚用Unix时最想干的事情就是想把Unix搞得像DOS一些， 
+其中的一条就是把Unix的提示符设置成$p$g那样的。下面就说一说做的方法。 
+
+不同的SHELL设置的方法不同，比较方便的是GNU bash(Bourne Again Shell) 
+和ksh(Korn Shell)以及tcsh(csh的增强版，Linux中的csh就是到tcsh的一个 
+符号连接)。普通的sh(Bourne Shell)和csh设置比较罗嗦。下面就一个一个的 
+说各种Shell的设置方法： 
+ksh: 
+由于ksh把提示符变量PS1作为一个特殊的变量看待，cd的时候ksh会自动更 
+新PS1的值所以只要简单的把当前路径对应的环境变量$PWD加到PS1里就行了： 
+
+PS1='$PWD $ ' 
+
+sh: 
+由于Bourne Shell只把PS1作为一个普通的变量，而且不支持别名，因此无 
+法完美地实现DOS中相同的功能，解决的方法是重新定义一个命令(比如xcd) 
+将其实现为一个函数： 
+
+xcd() { cd $* ; PS1="`pwd` $ "; } 
+
+然后每次用xcd切换目录。 
+
+csh: 
+csh虽然不对提示符变量$prompt作特殊处理，但它支持别名，可以修改一下 
+cd的语义，使其自动修改提示符： 
+
+alias setprompt 'set prompt="${cwd}% "' 
+setprompt# to set the initial prompt 
+alias cd 'chdir \!* && setprompt' 
+
+bash: 
+bash提供了一些特殊的变量来支持提示符的设置，\w表示当前路径，并把 
+等同于$HOME的部分替换成~，以缩短提示符的长度。 
+
+PS1='\w $ ' 
+
+Linux中是把hostname也加上了： 
+
+PS1='\h:\w $ ' # \h 表示hostname 
+
+为了更象DOS，可以把不同的命令分得更清楚，我通常加上一个换行符： 
+
+PS1=' 
+\h:\w $ ' 
+
+tcsh: 
+tcsh的做法类似于bash，只不过变量的名字不同： 
+
+set prompt='%~ ' # %~ 表示当前路径 
+Sample: 
+Solaris中的不同做法：如何在命令行显示目录？
+用惯了DOS的伙计刚用Unix时最想干的事情就是想把Unix搞得像DOS一些，
+其中的一条就是把Unix的提示符设置成$p$g那样的。下面就说一说做的方法。
+    不同的SHELL设置的方法不同，比较方便的是GNU bash(Bourne Again Shell)
+和ksh(Korn Shell)以及tcsh(csh的增强版，Linux中的csh就是到tcsh的一个
+符号连接)。普通的sh(Bourne Shell)和csh设置比较罗嗦。下面就一个一个的
+说各种Shell的设置方法：
+ksh:
+    由于ksh把提示符变量PS1作为一个特殊的变量看待，cd的时候ksh会自动更
+    新PS1的值所以只要简单的把当前路径对应的环境变量$PWD加到PS1里就行了：
+        PS1='$PWD $ '
+sh:
+    由于Bourne Shell只把PS1作为一个普通的变量，而且不支持别名，因此无
+    法完美地实现DOS中相同的功能，解决的方法是重新定义一个命令(比如xcd)
+    将其实现为一个函数：
+        xcd() { cd $* ; PS1="`pwd` $ "; }
+    然后每次用xcd切换目录。
+csh:
+    csh虽然不对提示符变量$prompt作特殊处理，但它支持别名，可以修改一下
+    cd的语义，使其自动修改提示符：
+        alias setprompt 'set prompt="${cwd}% "'
+        setprompt# to set the initial prompt
+        alias cd 'chdir \!* && setprompt'
+bash:
+    bash提供了一些特殊的变量来支持提示符的设置，\w表示当前路径，并把
+    等同于$HOME的部分替换成~，以缩短提示符的长度。
+        PS1='\w $ '
+    Linux中是把hostname也加上了：
+        PS1='\h:\w $ '          # \h 表示hostname
+    为了更象DOS，可以把不同的命令分得更清楚，我通常加上一个换行符：
+        PS1='
+        \h:\w $ '
+tcsh:
+    tcsh的做法类似于bash，只不过变量的名字不同：
+        set prompt='%~ '        # %~ 表示当前路径
+<script type="text/javascript"><!-- google_ad_client = "ca-pub-7104628658411459"; /* wide2 */ google_ad_slot = "5922063526"; google_ad_width = 468; google_ad_height = 60; //--></script><script type="text/javascript" src="http://pagead2.googlesyndication.com/pagead/show_ads.js"></script>
+顶
+0
+踩
+0
+ 
+ 
+上一篇Ubuntu 使用体会: (安装软件包)
+下一篇Linux|Unix中Bash环境变量的设定顺序
+我的同类文章
+Linux及Unix（9）
+?国产龙芯笔记本(on 龙芯2F)的使用体验2013-11-19阅读6103
+?Linux下我经常使用的一些命令及配置2012-12-06阅读1045
+?Ubuntu 使用体会: (安装软件包)2012-12-06阅读2091
+?Ubuntu 中软件的安装、卸载以及查看的方法总结2012-03-23阅读1325
+?不知不觉我都快变成了Ubuntu的信徒了2010-05-08阅读1343
+?循序渐进PostgreSQL: 实现PostgreSQL自启动2012-12-16阅读6605
+?Linux|Unix中Bash环境变量的设定顺序2012-12-06阅读1266
+?再谈DOS批处理下格式化日期字符串的方法(详解)2012-03-31阅读2251
+?DB2 v9.5在Ubuntu10.x下安装2012-03-12阅读2128
+参考知识库
+img
+JavaScript知识库
+14538关注|1514收录
+img
+Linux知识库
+38关注|3939收录
+img
+jQuery知识库
+8827关注|948收录
+img
+AngularJS知识库
+4767关注|569收录
+猜你在找
+开发LinuxShell脚本程序（六）字符串、文件和命令开发LinuxShell脚本程序（五）参量、变量和函数开发LinuxShell脚本程序（四）参数解析和扩充2017跟老男孩学Linux运维：Shell编程实战书籍视频-第1-20章开发LinuxShell脚本程序【一】
+《unixlinux编程实践教程》学习笔记第二章 编写whocp命令UnixLinux命令搜索程序名搜索 whereisUnixLinux命令压缩打包打包压缩工具 tar命令UnixLinux命令网络操作工具网络配置工具ifconfig命令UnixLinux命令查看命令帮助 man

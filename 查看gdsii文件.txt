@@ -1,0 +1,6 @@
+
+先在shell里面用 od -x xxx.gds  把你的gds文件转换为文本
+
+然后去看看有关gds的说明文档,用脚本抓出你要的东西
+
+od 是將binary code 轉換成ASCII code，就可以看出相對應的內容。
